@@ -29,5 +29,18 @@ class HomeController extends AbstractController
     {
         return $this->render("home/about.html.twig");
     }
+
+    /**
+     * @Route("/view/{id}", name="view")
+     */
+    public function view($id): Response
+    {
+
+        $repo = $this->getDoctrine()->getRepository(Article::class);
+        $article = $repo->find($id);
+        if(!$article)
+            return $this->redirectToRoute('home');
+        return $this->render("home/view.html.twig",['article'=>$article]);
+    }
 }
 
